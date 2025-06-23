@@ -21,9 +21,10 @@
   "linter": {
     "enabled": true,
     "rules": {
-      "recommended": true,
+      "recommended": false,
       "style": {
-        "noNonNullAssertion": "off"
+        "noNonNullAssertion": "off",
+        "noCommonJs": "error"
       },
       "suspicious": {
         "noExplicitAny": "off"
