@@ -8,7 +8,9 @@ import {
 import { createRouter as createTanStackRouter } from "@tanstack/react-router";
 import { ConvexProvider, ConvexReactClient } from "convex/react";
 import { DefaultCatchBoundary } from "./components/DefaultCatchBoundary";
+import { Loading } from "./components/loading";
 import { NotFound } from "./components/NotFound";
+import { ThemeProvider } from "./components/theme-provider";
 import { routeTree } from "./routeTree.gen";
 
 export function createRouter() {
@@ -37,6 +39,7 @@ export function createRouter() {
     defaultErrorComponent: DefaultCatchBoundary,
     defaultSsr: true,
     defaultPendingMs: 0,
+    defaultPendingComponent: Loading,
     defaultViewTransition: true,
     defaultNotFoundComponent: () => <NotFound />,
     context: { queryClient, convexClient: convex, convexQueryClient },
