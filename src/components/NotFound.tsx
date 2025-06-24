@@ -1,5 +1,5 @@
-import { Link } from '@tanstack/react-router'
-import { Button } from '@/components/ui/button'
+import { Link } from "@tanstack/react-router";
+import { Button } from "@/components/ui/button";
 
 export function NotFound({ children }: { children?: any }) {
   return (
@@ -10,17 +10,15 @@ export function NotFound({ children }: { children?: any }) {
       <p className="flex items-center gap-2 flex-wrap">
         <Button
           onClick={() => window.history.back()}
-          className="bg-emerald-500 text-white px-2 py-1 rounded uppercase font-black text-sm"
-        >
+          className="bg-emerald-500 text-white px-2 py-1 rounded uppercase font-black text-sm">
           Go back
         </Button>
         <Link
           to="/"
-          className="bg-cyan-600 text-white px-2 py-1 rounded uppercase font-black text-sm"
-        >
+          className="bg-cyan-600 text-white px-2 py-1 rounded uppercase font-black text-sm">
           Start Over
         </Link>
       </p>
     </div>
-  )
+  );
 }

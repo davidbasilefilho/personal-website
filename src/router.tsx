@@ -1,7 +1,11 @@
 import { ConvexQueryClient } from "@convex-dev/react-query";
-import { QueryClient } from "@tanstack/react-query";
+import {
+  dehydrate,
+  hydrate,
+  QueryClient,
+  QueryClientProvider,
+} from "@tanstack/react-query";
 import { createRouter as createTanStackRouter } from "@tanstack/react-router";
-import { routerWithQueryClient } from "@tanstack/react-router-with-query";
 import { ConvexProvider, ConvexReactClient } from "convex/react";
 import { DefaultCatchBoundary } from "./components/DefaultCatchBoundary";
 import { NotFound } from "./components/NotFound";
@@ -27,24 +31,34 @@ export function createRouter() {
   });
   convexQueryClient.connect(queryClient);
 
-  const router = routerWithQueryClient(
-    createTanStackRouter({
-      routeTree,
-      defaultPreload: "intent",
-      defaultErrorComponent: DefaultCatchBoundary,
-      defaultSsr: true,
-      defaultPendingMs: 0,
-      defaultViewTransition: true,
-      defaultNotFoundComponent: () => <NotFound />,
-      context: { queryClient, convexClient: convex, convexQueryClient },
-      Wrap: ({ children }: { children: React.ReactNode }) => (
+  const router = createTanStackRouter({
+    routeTree,
+    defaultPreload: "intent",
+    defaultErrorComponent: DefaultCatchBoundary,
+    defaultSsr: true,
+    defaultPendingMs: 0,
+    defaultViewTransition: true,
+    defaultNotFoundComponent: () => <NotFound />,
+    context: { queryClient, convexClient: convex, convexQueryClient },
+
+    dehydrate: () => {
+      return {
+        queryClientState: dehydrate(queryClient),
+      };
+    },
+
+    hydrate: (dehydrated) => {
+      hydrate(queryClient, dehydrated.queryClientState);
+    },
+
+    Wrap: ({ children }: { children: React.ReactNode }) => (
+      <QueryClientProvider client={convexQueryClient.queryClient}>
         <ConvexProvider client={convexQueryClient.convexClient}>
           {children}
         </ConvexProvider>
-      ),
-    }),
-    queryClient
-  );
+      </QueryClientProvider>
+    ),
+  });
 
   return router;
 }
