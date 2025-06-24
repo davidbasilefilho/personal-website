@@ -1,7 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { TypingAnimation } from "@/components/magicui/typing-animation";
 import { Separator } from "@/components/ui/separator";
-import { AuroraText } from "../components/magicui/aurora-text";
 import { LineShadowText } from "../components/magicui/line-shadow-text";
 import { SparklesText } from "../components/magicui/sparkles-text";
 
@@ -39,18 +38,18 @@ function RouteComponent() {
         <TypingAnimation
           duration={50}
           delay={baseDelay}
-          className="text-2xl md:text-3xl bg-clip-text text-transparent bg-gradient-to-br from-color-2 via-chart-2 to-color-2 font-semibold leading-tight mb-4">
+          className="text-2xl md:text-3xl bg-clip-text text-transparent bg-gradient-to-br from-color-2 via-chart-2 to-color-2 font-semibold leading-tight mb-3">
           David Basile Filho
         </TypingAnimation>
         <TypingAnimation
-          className="max-w-2xl text-lg md:text-xl text-muted-foreground leading-tight font-normal"
+          className="max-w-xl text-lg md:text-lg text-muted-foreground leading-tight font-normal"
           duration={10}
           delay={baseDelay + 1500}>
           {`I'm a brazilian ${age} year old college developer who's been building software since the age of ten. I turn ideas into reality with code, and I love every second of it.`}
         </TypingAnimation>
       </section>
       <Separator />
-      <section className="self-stretch grow bg-gradient-to-br from-accent to-destructive/10 p-6 rounded-b">
+      <section className="self-stretch grow bg-accent p-6 rounded-b">
         <h1 className="text-3xl font-semibold">My journey</h1>
         {Array.from({ length: 10 }, (_, i) => (
           <div key={i} className="mb-4">
