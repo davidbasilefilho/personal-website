@@ -53,14 +53,12 @@ export const AnimatedSubscribeButton = React.forwardRef<
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            {...props}
-          >
+            {...props}>
             <motion.span
               key="action"
               className="relative flex h-full w-full items-center justify-center font-semibold"
               initial={{ y: -50 }}
-              animate={{ y: 0 }}
-            >
+              animate={{ y: 0 }}>
               {changeChild} {/* Use children for subscribed state */}
             </motion.span>
           </motion.button>
@@ -78,14 +76,12 @@ export const AnimatedSubscribeButton = React.forwardRef<
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            {...props}
-          >
+            {...props}>
             <motion.span
               key="reaction"
               className="relative flex items-center justify-center font-semibold"
               initial={{ x: 0 }}
-              exit={{ x: 50, transition: { duration: 0.1 } }}
-            >
+              exit={{ x: 50, transition: { duration: 0.1 } }}>
               {initialChild} {/* Use children for unsubscribed state */}
             </motion.span>
           </motion.button>

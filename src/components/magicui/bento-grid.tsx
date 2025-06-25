@@ -26,8 +26,7 @@ const BentoGrid = ({ children, className, ...props }: BentoGridProps) => {
         "grid w-full auto-rows-[22rem] grid-cols-3 gap-4",
         className,
       )}
-      {...props}
-    >
+      {...props}>
       {children}
     </div>
   );
@@ -53,8 +52,7 @@ const BentoCard = ({
       "transform-gpu dark:bg-background dark:[border:1px_solid_rgba(255,255,255,.1)] dark:[box-shadow:0_-20px_80px_-20px_#ffffff1f_inset]",
       className,
     )}
-    {...props}
-  >
+    {...props}>
     <div>{background}</div>
     <div className="pointer-events-none z-10 flex transform-gpu flex-col gap-1 p-6 transition-all duration-300 group-hover:-translate-y-10">
       <Icon className="h-12 w-12 origin-left transform-gpu text-neutral-700 transition-all duration-300 ease-in-out group-hover:scale-75" />
@@ -67,8 +65,7 @@ const BentoCard = ({
     <div
       className={cn(
         "pointer-events-none absolute bottom-0 flex w-full translate-y-10 transform-gpu flex-row items-center p-4 opacity-0 transition-all duration-300 group-hover:translate-y-0 group-hover:opacity-100",
-      )}
-    >
+      )}>
       <Button variant="ghost" asChild size="sm" className="pointer-events-auto">
         <a href={href}>
           {cta}

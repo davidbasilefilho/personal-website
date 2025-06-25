@@ -385,8 +385,7 @@ const TextAnimateBase = ({
         exit="exit"
         className={cn("whitespace-pre-wrap", className)}
         viewport={{ once }}
-        {...props}
-      >
+        {...props}>
         {segments.map((segment, i) => (
           <motion.span
             key={`${by}-${segment}-${i}`}
@@ -396,8 +395,7 @@ const TextAnimateBase = ({
               by === "line" ? "block" : "inline-block whitespace-pre",
               by === "character" && "",
               segmentClassName,
-            )}
-          >
+            )}>
             {segment}
           </motion.span>
         ))}

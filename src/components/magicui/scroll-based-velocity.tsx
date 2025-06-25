@@ -87,8 +87,7 @@ function ParallaxText({
     <div
       ref={containerRef}
       className="w-full overflow-hidden whitespace-nowrap"
-      {...props}
-    >
+      {...props}>
       <motion.div className="inline-block" style={{ x }}>
         {Array.from({ length: repetitions }).map((_, i) => (
           <span key={i} ref={i === 0 ? textRef : null}>
@@ -113,13 +112,11 @@ export function VelocityScroll({
         "relative w-full text-4xl font-bold tracking-[-0.02em] md:text-7xl md:leading-[5rem]",
         className,
       )}
-      {...props}
-    >
+      {...props}>
       {Array.from({ length: numRows }).map((_, i) => (
         <ParallaxText
           key={i}
-          baseVelocity={defaultVelocity * (i % 2 === 0 ? 1 : -1)}
-        >
+          baseVelocity={defaultVelocity * (i % 2 === 0 ? 1 : -1)}>
           {children}
         </ParallaxText>
       ))}

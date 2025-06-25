@@ -4,11 +4,14 @@ import {
   SignInButton,
   UserButton,
 } from "@clerk/tanstack-react-start";
-import { dark, experimental__simple } from "@clerk/themes";
-import { Link, LinkComponentProps } from "@tanstack/react-router";
+import { dark } from "@clerk/themes";
+import {
+  Link,
+  LinkComponentProps,
+  useRouterState,
+} from "@tanstack/react-router";
 import { LogIn } from "lucide-react";
 import { ModeToggle } from "./mode-toggle";
-import { useTheme } from "./theme-provider";
 import { buttonVariants } from "./ui/button";
 import {
   Sidebar,
@@ -36,20 +39,13 @@ const items: (LinkComponentProps & { label: React.ReactNode })[] = [
 ];
 
 export function AppSidebar() {
-  const { theme } = useTheme();
-  let resolvedTheme = theme;
-  if (theme === "system") {
-    resolvedTheme = window.matchMedia("(prefers-color-scheme: dark)").matches
-      ? "dark"
-      : "light";
-  }
-
-  const clerkTheme = resolvedTheme === "dark" ? dark : experimental__simple;
+  const router = useRouterState();
+  const pathname = router.location.pathname;
   return (
     <Sidebar variant="inset">
       <SidebarContent>
         <SidebarGroup>
-          <SidebarGroupLabel className="px-0 h-fit">
+          <SidebarGroupLabel className="px-0 h-fit mb-0.5">
             <SidebarTrigger />
             David Basile Filho
           </SidebarGroupLabel>
@@ -57,8 +53,13 @@ export function AppSidebar() {
             <SidebarMenu>
               {items.map((item) => (
                 <SidebarMenuItem key={item.to}>
-                  <SidebarMenuButton>
-                    <Link {...item}>{item.label}</Link>
+                  <SidebarMenuButton
+                    variant={pathname === item.to ? "active" : "default"}>
+                    <Link
+                      className="w-full no-underline decoration-0"
+                      {...item}>
+                      {item.label}
+                    </Link>
                   </SidebarMenuButton>
                 </SidebarMenuItem>
               ))}
@@ -70,10 +71,10 @@ export function AppSidebar() {
         <SidebarMenu>
           <SidebarMenuItem>
             <SignedIn>
-              <UserButton appearance={{ baseTheme: clerkTheme }} />
+              <UserButton appearance={{ baseTheme: dark }} />
             </SignedIn>
             <SignedOut>
-              <SignInButton mode="modal" appearance={{ baseTheme: clerkTheme }}>
+              <SignInButton mode="modal" appearance={{ baseTheme: dark }}>
                 <div
                   className={buttonVariants({
                     variant: "outline",
@@ -94,8 +95,12 @@ export function AppSidebar() {
 }
 
 export function AppSidebarTrigger() {
-  const { open } = useSidebar();
+  const { open, openMobile } = useSidebar();
   return (
-    <>{!open && <SidebarTrigger className="absolute top-4 left-4 z-50" />}</>
+    <>
+      {(!open || !openMobile) && (
+        <SidebarTrigger className="absolute top-4 left-4 z-50" />
+      )}
+    </>
   );
 }

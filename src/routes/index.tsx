@@ -1,4 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { Journey } from "@/components/journey";
 import { TypingAnimation } from "@/components/magicui/typing-animation";
 import { Separator } from "@/components/ui/separator";
 import { LineShadowText } from "../components/magicui/line-shadow-text";
@@ -42,7 +43,7 @@ function RouteComponent() {
           David Basile Filho
         </TypingAnimation>
         <TypingAnimation
-          className="max-w-xl text-lg md:text-lg text-muted-foreground leading-tight font-normal"
+          className="font-normal text-muted-foreground text-lg max-w-2xl leading-snug"
           duration={10}
           delay={baseDelay + 1500}>
           {`I'm a brazilian ${age} year old college developer who's been building software since the age of ten. I turn ideas into reality with code, and I love every second of it.`}
@@ -50,15 +51,7 @@ function RouteComponent() {
       </section>
       <Separator />
       <section className="self-stretch grow bg-accent p-6 rounded-b">
-        <h1 className="text-3xl font-semibold">My journey</h1>
-        {Array.from({ length: 10 }, (_, i) => (
-          <div key={i} className="mb-4">
-            <h2 className="text-xl font-semibold">Step {i + 1}</h2>
-            <p className="text-muted-foreground">
-              This is a description of step {i + 1} in my journey.
-            </p>
-          </div>
-        ))}
+        <Journey />
       </section>
     </main>
   );

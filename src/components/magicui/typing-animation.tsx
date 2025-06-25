@@ -82,8 +82,7 @@ export function TypingAnimation({
         "text-4xl font-bold leading-[5rem] tracking-[-0.02em]",
         className,
       )}
-      {...props}
-    >
+      {...props}>
       {displayedText}
     </MotionComponent>
   );

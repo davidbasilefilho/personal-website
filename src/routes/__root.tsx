@@ -2,6 +2,7 @@
 
 import { ClerkProvider, useAuth } from "@clerk/tanstack-react-start";
 import { getAuth } from "@clerk/tanstack-react-start/server";
+import { dark } from "@clerk/themes";
 import { ConvexQueryClient } from "@convex-dev/react-query";
 import { QueryClient } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
@@ -47,13 +48,17 @@ export const Route = createRootRouteWithContext<{
         content: "width=device-width, initial-scale=1",
       },
       {
-        title: "TanStack Start Starter",
+        title: "David Basile Filho",
       },
     ],
     links: [
       {
         rel: "stylesheet",
         href: appCss,
+      },
+      {
+        rel: "stylesheet",
+        href: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/devicon.min.css",
       },
     ],
   }),
@@ -78,7 +83,10 @@ export const Route = createRootRouteWithContext<{
 function RootComponent() {
   const context = useRouteContext({ from: Route.id });
   return (
-    <ClerkProvider>
+    <ClerkProvider
+      appearance={{
+        baseTheme: dark,
+      }}>
       <ConvexProviderWithClerk client={context.convexClient} useAuth={useAuth}>
         <RootDocument>
           <Outlet />

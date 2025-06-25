@@ -31,8 +31,7 @@ export const AnimatedShinyText: FC<AnimatedShinyTextProps> = ({
 
         className,
       )}
-      {...props}
-    >
+      {...props}>
       {children}
     </span>
   );

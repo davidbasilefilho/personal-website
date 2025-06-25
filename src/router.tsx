@@ -10,7 +10,6 @@ import { ConvexProvider, ConvexReactClient } from "convex/react";
 import { DefaultCatchBoundary } from "./components/DefaultCatchBoundary";
 import { Loading } from "./components/loading";
 import { NotFound } from "./components/NotFound";
-import { ThemeProvider } from "./components/theme-provider";
 import { routeTree } from "./routeTree.gen";
 
 export function createRouter() {

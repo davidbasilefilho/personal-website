@@ -34,8 +34,7 @@ export function LineShadowText({
         className,
       )}
       data-text={content}
-      {...props}
-    >
+      {...props}>
       {content}
     </MotionComponent>
   );

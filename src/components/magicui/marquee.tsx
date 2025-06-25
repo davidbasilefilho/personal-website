@@ -51,8 +51,7 @@ export function Marquee({
           "flex-col": vertical,
         },
         className,
-      )}
-    >
+      )}>
       {Array(repeat)
         .fill(0)
         .map((_, i) => (
@@ -63,8 +62,7 @@ export function Marquee({
               "animate-marquee-vertical flex-col": vertical,
               "group-hover:[animation-play-state:paused]": pauseOnHover,
               "[animation-direction:reverse]": reverse,
-            })}
-          >
+            })}>
             {children}
           </div>
         ))}
