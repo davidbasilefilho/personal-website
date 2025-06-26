@@ -54,11 +54,37 @@ function RouteComponent() {
       proficiency: 88,
     },
     {
+      name: "Tanstack Start",
+      color: "#0891B2",
+      category: "Frontend",
+      proficiency: 94,
+    },
+    {
+      name: "Bun",
+      color: resolvedTheme === "dark" ? "#fbf0df" : "#22223b",
+      icon: <i className="devicon-bun-plain"></i>,
+      category: "Backend",
+      proficiency: 88,
+    },
+    {
       name: "Tailwind CSS",
       color: "#38bdf8",
       icon: <i className="devicon-tailwindcss-original"></i>,
       category: "Frontend",
       proficiency: 92,
+    },
+    {
+      name: "shadcn/ui",
+      color: resolvedTheme === "dark" ? "#666" : "#555",
+      category: "Frontend",
+      proficiency: 94,
+    },
+    {
+      name: "Go",
+      color: "#00acd7",
+      icon: <i className="devicon-go-original-wordmark"></i>,
+      category: "Backend",
+      proficiency: 76,
     },
     {
       name: "PostgreSQL",
