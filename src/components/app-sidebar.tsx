@@ -54,13 +54,14 @@ export function AppSidebar() {
             David Basile Filho
           </SidebarGroupLabel>
           <SidebarGroupContent>
-            <SidebarMenu>
+            <SidebarMenu className="w-full *:**:w-full">
               {items.map((item) => (
                 <SidebarMenuItem key={item.to}>
                   <SidebarMenuButton
-                    variant={pathname === item.to ? "active" : "default"}>
+                    variant={pathname === item.to ? "active" : "default"}
+                    className="p-0">
                     <Link
-                      className="w-full no-underline decoration-0"
+                      className="no-underline decoration-0 p-2"
                       {...item}>
                       {item.label}
                     </Link>

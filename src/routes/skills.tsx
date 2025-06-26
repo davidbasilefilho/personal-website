@@ -116,7 +116,7 @@ function RouteComponent() {
     {
       name: "Python",
       color: "#3572A5",
-      icon: <i className="devicon-python-plain"></i>,
+      icon: <i className="devicon-python-original colored"></i>,
       category: "Backend",
       proficiency: 68,
     },
@@ -130,7 +130,7 @@ function RouteComponent() {
     {
       name: "Supabase",
       color: "#3ecf8e",
-      icon: <i className="devicon-supabase-plain"></i>,
+      icon: <i className="devicon-supabase-plain colored"></i>,
       category: "Backend",
       proficiency: 78,
     },
@@ -223,8 +223,10 @@ function RouteComponent() {
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}>
-          <h1 className="text-5xl md:text-6xl font-bold mb-6">My Skills</h1>
-          <p className="text-base sm:text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto leading-relaxed px-4">
+          <h1 className="text-4xl md:text-5xl font-bold mb-3 md:mb-4">
+            My Skills
+          </h1>
+          <p className="text-base sm:text-lg text-muted-foreground max-w-2xl mx-auto leading-relaxed px-4">
             A comprehensive overview of my technical expertise, ranging from
             frontend development to backend architecture.
           </p>

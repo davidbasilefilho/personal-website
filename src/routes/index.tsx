@@ -45,7 +45,8 @@ function RouteComponent() {
           <span className="italic">beautiful</span>{" "}
           <LineShadowText
             className="italic font-mono"
-            shadowColor="var(--sidebar-accent-foreground)">
+            shadowColor="var(--sidebar-accent-foreground)"
+            offset="0.05em">
             code
           </LineShadowText>
         </motion.h1>
