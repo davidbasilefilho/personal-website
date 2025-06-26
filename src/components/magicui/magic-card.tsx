@@ -25,7 +25,7 @@ export function MagicCard({
   gradientOpacity = 0.8,
   gradientFrom = "#9E7AFF",
   gradientTo = "#FE8BBB",
-  backgroundColor = "var(--background)",
+  backgroundColor = "card",
   borderWidth = 1,
 }: MagicCardProps) {
   const cardRef = useRef<HTMLDivElement>(null);
@@ -82,9 +82,12 @@ export function MagicCard({
   return (
     <div
       ref={cardRef}
-      className={cn("group relative rounded-[inherit]", className)}>
+      className={cn(
+        "group relative rounded-[inherit] overlflow-hidden",
+        className,
+      )}>
       <motion.div
-        className="pointer-events-none absolute inset-0 rounded-[inherit] bg-border duration-300 group-hover:opacity-100"
+        className="pointer-events-none overflow-hidden absolute inset-0 rounded-[inherit] bg-border duration-300 group-hover:opacity-100"
         style={{
           background: useMotionTemplate`
           radial-gradient(${gradientSize}px circle at ${mouseX}px ${mouseY}px,
@@ -96,11 +99,14 @@ export function MagicCard({
         }}
       />
       <div
-        className={cn("absolute inset-px rounded-[inherit] bg-background")}
+        className={cn(
+          "absolute inset-px rounded-[inherit]",
+          backgroundColor && `bg-${backgroundColor}`,
+        )}
         style={{ inset: `${borderWidth}px` }}
       />
       <motion.div
-        className="pointer-events-none absolute inset-px rounded-[inherit] opacity-0 transition-opacity duration-300 group-hover:opacity-100"
+        className="pointer-events-none overflow-hidden absolute inset-px rounded-[inherit] opacity-0 transition-opacity duration-300 group-hover:opacity-100"
         style={{
           inset: `${borderWidth}px`,
           background: useMotionTemplate`

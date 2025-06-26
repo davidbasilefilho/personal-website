@@ -2,7 +2,7 @@
 
 import { ClerkProvider, useAuth } from "@clerk/tanstack-react-start";
 import { getAuth } from "@clerk/tanstack-react-start/server";
-import { dark } from "@clerk/themes";
+import { dark, experimental__simple } from "@clerk/themes";
 import { ConvexQueryClient } from "@convex-dev/react-query";
 import { QueryClient } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
@@ -19,6 +19,7 @@ import { getWebRequest } from "@tanstack/react-start/server";
 import { ConvexReactClient } from "convex/react";
 import { ConvexProviderWithClerk } from "convex/react-clerk";
 import { AppSidebar, AppSidebarTrigger } from "@/components/app-sidebar";
+import { useTheme } from "@/components/theme-provider";
 import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar";
 import appCss from "@/styles/app.css?url";
 
@@ -82,10 +83,11 @@ export const Route = createRootRouteWithContext<{
 
 function RootComponent() {
   const context = useRouteContext({ from: Route.id });
+  const { resolvedTheme } = useTheme();
   return (
     <ClerkProvider
       appearance={{
-        baseTheme: dark,
+        baseTheme: resolvedTheme === "dark" ? dark : experimental__simple,
       }}>
       <ConvexProviderWithClerk client={context.convexClient} useAuth={useAuth}>
         <RootDocument>

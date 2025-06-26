@@ -4,7 +4,6 @@ import {
   SignInButton,
   UserButton,
 } from "@clerk/tanstack-react-start";
-import { dark } from "@clerk/themes";
 import {
   Link,
   LinkComponentProps,
@@ -12,6 +11,7 @@ import {
 } from "@tanstack/react-router";
 import { LogIn } from "lucide-react";
 import { ModeToggle } from "./mode-toggle";
+import { useTheme } from "./theme-provider";
 import { buttonVariants } from "./ui/button";
 import {
   Sidebar,
@@ -35,6 +35,10 @@ const items: (LinkComponentProps & { label: React.ReactNode })[] = [
   {
     to: "/skills",
     label: "Skills",
+  },
+  {
+    to: "/posts",
+    label: "Posts",
   },
 ];
 
@@ -71,10 +75,10 @@ export function AppSidebar() {
         <SidebarMenu>
           <SidebarMenuItem>
             <SignedIn>
-              <UserButton appearance={{ baseTheme: dark }} />
+              <UserButton />
             </SignedIn>
             <SignedOut>
-              <SignInButton mode="modal" appearance={{ baseTheme: dark }}>
+              <SignInButton mode="modal">
                 <div
                   className={buttonVariants({
                     variant: "outline",
@@ -95,11 +99,11 @@ export function AppSidebar() {
 }
 
 export function AppSidebarTrigger() {
-  const { open, openMobile } = useSidebar();
+  const { open, openMobile, isMobile } = useSidebar();
   return (
     <>
-      {(!open || !openMobile) && (
-        <SidebarTrigger className="absolute top-4 left-4 z-50" />
+      {(!open || (!openMobile && isMobile)) && (
+        <SidebarTrigger className="absolute top-2 left-2 md:top-4 md:left-4 z-50" />
       )}
     </>
   );

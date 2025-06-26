@@ -9,6 +9,7 @@ type ThemeProviderProps = {
 };
 
 type ThemeProviderState = {
+  resolvedTheme: "dark" | "light";
   theme: Theme;
   setTheme: (theme: Theme) => void;
 };
@@ -16,6 +17,7 @@ type ThemeProviderState = {
 const initialState: ThemeProviderState = {
   theme: "system",
   setTheme: () => null,
+  resolvedTheme: "light",
 };
 
 const ThemeProviderContext = createContext<ThemeProviderState>(initialState);
@@ -26,27 +28,40 @@ export function ThemeProvider({
   storageKey = "vite-ui-theme",
   ...props
 }: ThemeProviderProps) {
-  const [theme, setTheme] = useState<Theme>(
-    () => (localStorage.getItem(storageKey) as Theme) || defaultTheme,
-  );
+  const [theme, setTheme] = useState<Theme>(defaultTheme);
+  const [resolvedTheme, setResolvedTheme] = useState<"dark" | "light">("light");
+  const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
-    const root = window.document.documentElement;
+    setMounted(true);
+  }, []);
 
-    root.classList.remove("light", "dark");
+  useEffect(() => {
+    if (mounted) {
+      setTheme((localStorage.getItem(storageKey) as Theme) || defaultTheme);
+    }
+  }, [mounted, storageKey, defaultTheme]);
 
-    if (theme === "system") {
-      const systemTheme = window.matchMedia("(prefers-color-scheme: dark)")
-        .matches
-        ? "dark"
-        : "light";
-
-      root.classList.add(systemTheme);
+  useEffect(() => {
+    if (!mounted) {
       return;
     }
 
-    root.classList.add(theme);
-  }, [theme]);
+    const root = window.document.documentElement;
+    root.classList.remove("light", "dark");
+
+    let newResolvedTheme: "dark" | "light";
+    if (theme === "system") {
+      newResolvedTheme = window.matchMedia("(prefers-color-scheme: dark)")
+        .matches
+        ? "dark"
+        : "light";
+    } else {
+      newResolvedTheme = theme;
+    }
+    setResolvedTheme(newResolvedTheme);
+    root.classList.add(newResolvedTheme);
+  }, [theme, mounted]);
 
   const value = {
     theme,
@@ -54,6 +69,7 @@ export function ThemeProvider({
       localStorage.setItem(storageKey, theme);
       setTheme(theme);
     },
+    resolvedTheme,
   };
 
   return (
