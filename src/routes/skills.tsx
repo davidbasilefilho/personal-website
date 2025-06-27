@@ -1,236 +1,189 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { motion, Variants } from "motion/react";
-import { resolve } from "path";
-import { ReactNode, useState } from "react";
+import { ReactNode, useMemo, useState } from "react";
+import { MagicCard } from "@/components/magicui/magic-card";
 import { useTheme } from "@/components/theme-provider";
 import { Card } from "@/components/ui/card";
+import { Separator } from "@/components/ui/separator";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { cn } from "@/lib/utils";
-import { AuroraText } from "../components/magicui/aurora-text";
-import { MagicCard } from "../components/magicui/magic-card";
 
 export const Route = createFileRoute("/skills")({
   component: RouteComponent,
 });
 
+const skillsData = [
+  {
+    name: "TypeScript",
+    color: "#3178c6",
+    icon: <i className="devicon-typescript-plain"></i>,
+    category: "Frontend",
+    proficiency: 95,
+  },
+  {
+    name: "React",
+    color: "#61dafb",
+    icon: <i className="devicon-react-plain"></i>,
+    category: "Frontend",
+    proficiency: 90,
+  },
+  {
+    name: "Node.js",
+    color: "#3c873a",
+    icon: <i className="devicon-nodejs-plain"></i>,
+    category: "Backend",
+    proficiency: 85,
+  },
+  {
+    name: "Next.js",
+    color: "#000",
+    darkColor: "#fff",
+    icon: <i className="devicon-nextjs-plain"></i>,
+    category: "Frontend",
+    proficiency: 88,
+  },
+  {
+    name: "Tanstack Start",
+    color: "#0891B2",
+    category: "Frontend",
+    proficiency: 94,
+  },
+  {
+    name: "Bun",
+    color: "#22223b",
+    darkColor: "#fbf0df",
+    icon: (
+      <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/bun/bun-original.svg" />
+    ),
+    category: "Backend",
+    proficiency: 88,
+  },
+  {
+    name: "Tailwind CSS",
+    color: "#38bdf8",
+    icon: <i className="devicon-tailwindcss-original"></i>,
+    category: "Frontend",
+    proficiency: 92,
+  },
+  {
+    name: "shadcn/ui",
+    color: "#555",
+    darkColor: "#666",
+    category: "Frontend",
+    proficiency: 94,
+  },
+  {
+    name: "Go",
+    color: "#00acd7",
+    icon: <i className="devicon-go-original-wordmark"></i>,
+    category: "Backend",
+    proficiency: 76,
+  },
+  {
+    name: "PostgreSQL",
+    color: "#336791",
+    icon: <i className="devicon-postgresql-plain"></i>,
+    category: "Database",
+    proficiency: 80,
+  },
+  {
+    name: "MySQL",
+    color: "#4479A1",
+    icon: <i className="devicon-mysql-original"></i>,
+    category: "Database",
+    proficiency: 75,
+  },
+  {
+    name: "Convex",
+    color: "#ffb300",
+    category: "Backend",
+    proficiency: 75,
+  },
+  {
+    name: "Vite",
+    color: "#646cff",
+    icon: (
+      <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/vitejs/vitejs-original.svg" />
+    ),
+    category: "Tools",
+    proficiency: 85,
+  },
+  {
+    name: "Python",
+    color: "#3572A5",
+    icon: (
+      <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/python/python-original.svg" />
+    ),
+    category: "Backend",
+    proficiency: 70,
+  },
+  {
+    name: "Linux",
+    color: "#e74c3c",
+    icon: (
+      <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/linux/linux-original.svg" />
+    ),
+    category: "Tools",
+    proficiency: 88,
+  },
+  {
+    name: "Supabase",
+    color: "#3ecf8e",
+    icon: <i className="devicon-supabase-plain colored"></i>,
+    category: "Backend",
+    proficiency: 78,
+  },
+  {
+    name: "JavaScript",
+    color: "#f7df1e",
+    icon: <i className="devicon-javascript-plain"></i>,
+    category: "Frontend",
+    proficiency: 88,
+  },
+  {
+    name: "Git",
+    color: "#f05032",
+    icon: <i className="devicon-git-plain"></i>,
+    category: "Tools",
+    proficiency: 90,
+  },
+];
+
+const categories = [
+  "All",
+  ...Array.from(new Set(skillsData.map((skill) => skill.category))),
+];
+
 function RouteComponent() {
   const [selectedCategory, setSelectedCategory] = useState<string>("All");
   const { resolvedTheme } = useTheme();
 
-  // use colors that work well on light and dark backgrounds
-  const skills: {
-    name: string;
-    color: string;
-    icon?: ReactNode;
-    category: "Frontend" | "Backend" | "Database" | "Tools";
-    proficiency: number;
-  }[] = [
-    {
-      name: "TypeScript",
-      color: "#3178c6",
-      icon: <i className="devicon-typescript-plain"></i>,
-      category: "Frontend",
-      proficiency: 95,
-    },
-    {
-      name: "React",
-      color: "#61dafb",
-      icon: <i className="devicon-react-plain"></i>,
-      category: "Frontend",
-      proficiency: 90,
-    },
-    {
-      name: "Node.js",
-      color: "#3c873a",
-      icon: <i className="devicon-nodejs-plain"></i>,
-      category: "Backend",
-      proficiency: 85,
-    },
-    {
-      name: "Next.js",
-      color: resolvedTheme === "dark" ? "#fff" : "#000",
-      icon: <i className="devicon-nextjs-plain"></i>,
-      category: "Frontend",
-      proficiency: 88,
-    },
-    {
-      name: "Tanstack Start",
-      color: "#0891B2",
-      category: "Frontend",
-      proficiency: 94,
-    },
-    {
-      name: "Bun",
-      color: resolvedTheme === "dark" ? "#fbf0df" : "#22223b",
-      icon: (
-        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/bun/bun-original.svg" />
-      ),
-      category: "Backend",
-      proficiency: 88,
-    },
-    {
-      name: "Tailwind CSS",
-      color: "#38bdf8",
-      icon: <i className="devicon-tailwindcss-original"></i>,
-      category: "Frontend",
-      proficiency: 92,
-    },
-    {
-      name: "shadcn/ui",
-      color: resolvedTheme === "dark" ? "#666" : "#555",
-      category: "Frontend",
-      proficiency: 94,
-    },
-    {
-      name: "Go",
-      color: "#00acd7",
-      icon: <i className="devicon-go-original-wordmark"></i>,
-      category: "Backend",
-      proficiency: 76,
-    },
-    {
-      name: "PostgreSQL",
-      color: "#336791",
-      icon: <i className="devicon-postgresql-plain"></i>,
-      category: "Database",
-      proficiency: 80,
-    },
-    {
-      name: "MySQL",
-      color: "#4479A1",
-      icon: <i className="devicon-mysql-original"></i>,
-      category: "Database",
-      proficiency: 75,
-    },
-    {
-      name: "Convex",
-      color: "#ffb300",
-      category: "Backend",
-      proficiency: 75,
-    },
-    {
-      name: "Vite",
-      color: "#646cff",
-      icon: (
-        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/vitejs/vitejs-original.svg" />
-      ),
-      category: "Tools",
-      proficiency: 85,
-    },
-    {
-      name: "Python",
-      color: "#3572A5",
-      icon: (
-        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/python/python-original.svg" />
-      ),
-      category: "Backend",
-      proficiency: 70,
-    },
-    {
-      name: "Linux",
-      color: "#e74c3c",
-      icon: (
-        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/linux/linux-original.svg" />
-      ),
-      category: "Tools",
-      proficiency: 88,
-    },
-    {
-      name: "Supabase",
-      color: "#3ecf8e",
-      icon: <i className="devicon-supabase-plain colored"></i>,
-      category: "Backend",
-      proficiency: 78,
-    },
-    {
-      name: "JavaScript",
-      color: "#f7df1e",
-      icon: <i className="devicon-javascript-plain"></i>,
-      category: "Frontend",
-      proficiency: 88,
-    },
-    {
-      name: "Git",
-      color: "#f05032",
-      icon: <i className="devicon-git-plain"></i>,
-      category: "Tools",
-      proficiency: 90,
-    },
-  ];
+  const skills = useMemo(() => {
+    return skillsData.map((skill) => ({
+      ...skill,
+      color:
+        resolvedTheme === "dark" && skill.darkColor
+          ? skill.darkColor
+          : skill.color,
+    }));
+  }, [resolvedTheme]);
 
-  const categories = [
-    "All",
-    ...Array.from(new Set(skills.map((skill) => skill.category))),
-  ];
-
-  const filteredSkills =
-    selectedCategory === "All"
-      ? skills
-      : skills.filter((skill) => skill.category === selectedCategory);
-
-  const containerVariants: Variants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.08,
-        delayChildren: 0.1,
-      },
-    },
-  };
-
-  const itemVariants: Variants = {
-    hidden: {
-      y: 20,
-      opacity: 0,
-      scale: 0.95,
-    },
-    visible: {
-      y: 0,
-      opacity: 1,
-      scale: 1,
-      transition: {
-        type: "spring" as const,
-        stiffness: 200,
-        damping: 25,
-        duration: 0.4,
-      },
-    },
-  };
+  const filteredSkills = useMemo(
+    () =>
+      selectedCategory === "All"
+        ? skills
+        : skills.filter((skill) => skill.category === selectedCategory),
+    [selectedCategory, skills],
+  );
 
   return (
-    <main className="min-h-full h-full px-4 sm:px-6 lg:px-8 py-8 rounded-xl relative overflow-hidden">
+    <main className="flex flex-col justify-stretch text-balance items-start h-fit min-h-full relative overflow-hidden">
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <motion.div
-          className="absolute -top-20 -right-20 w-96 h-96 rounded-full bg-primary/5 blur-3xl"
-          animate={{
-            scale: [1, 1.05, 1],
-            opacity: [0.2, 0.3, 0.2],
-          }}
-          transition={{
-            duration: 12,
-            ease: "easeInOut",
-          }}
-        />
-        <motion.div
-          className="absolute -bottom-20 -left-20 w-96 h-96 rounded-full bg-accent/10 blur-3xl"
-          animate={{
-            scale: [1.05, 1, 1.05],
-            opacity: [0.3, 0.1, 0.3],
-          }}
-          transition={{
-            duration: 15,
-            ease: "easeInOut",
-          }}
-        />
+        <div className="absolute -top-20 -right-20 w-96 h-96 rounded-full bg-primary/5 blur-3xl animate-pulse" />
+        <div className="absolute -bottom-20 -left-20 w-96 h-96 rounded-full bg-accent/10 blur-3xl animate-pulse" />
       </div>
 
-      <div className="max-w-7xl mx-auto relative z-10">
-        <motion.div
-          className="mb-12 text-center"
-          initial={{ opacity: 0, y: -20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}>
+      <section className="m-6 mt-10 w-full">
+        <div className="text-center animate-fade-in max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <h1 className="text-4xl md:text-5xl font-bold mb-3 md:mb-4">
             My Skills
           </h1>
@@ -238,89 +191,60 @@ function RouteComponent() {
             A comprehensive overview of my technical expertise, ranging from
             frontend development to backend architecture.
           </p>
-        </motion.div>
+        </div>
+      </section>
 
+      <div>
+        <Separator />
+      </div>
+
+      <section className="self-stretch grow bg-accent p-6 rounded-b border-t w-full">
         <Tabs defaultValue={categories[0]} className="w-full">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.2 }}
-            className="flex justify-center mb-8">
+          <div className="flex justify-center mb-4 animate-fade-in [animation-delay:0.2s]">
             <TabsList className="flex h-fit w-full md:w-3/5 lg:1/2 xl:w-fit bg-card/50 backdrop-blur-sm border border-border/50 rounded-xl p-1 flex-wrap gap-1">
               {categories.map((category) => (
                 <TabsTrigger
                   key={category}
                   value={category}
-                  className="relative px-3 sm:px-4 py-2 sm:py-2.5 rounded-lg transition-all duration-200 hover:bg-sidebar-accent data-[state=active]:bg-transparent! data-[state=active]:text-primary-foreground min-w-0 border-0"
-                  onClick={() => setSelectedCategory(category)}>
-                  <span
-                    className={cn(
-                      "truncate text-foreground w-16",
-                      selectedCategory === category &&
-                        "text-background dark:text-foreground",
-                    )}>
-                    {category}
-                  </span>
-                  {selectedCategory === category && (
-                    <motion.div
-                      className="absolute inset-0 bg-primary rounded-lg -z-10"
-                      layoutId="activeTab"
-                      transition={{
-                        type: "spring",
-                        stiffness: 500,
-                        damping: 30,
-                      }}
-                    />
+                  className={cn(
+                    selectedCategory === category
+                      ? "text-primary-foreground"
+                      : "hover:bg-sidebar-accent! dark:hover:bg-accent/75!",
+                    "relative px-3 sm:px-4 py-2 sm:py-2.5 rounded-lg transition-colors duration-200 data-[state=active]:bg-primary! data-[state=active]:text-primary-foreground! min-w-0 border-0",
                   )}
+                  onClick={() => setSelectedCategory(category)}>
+                  <span className="truncate w-16">{category}</span>
                 </TabsTrigger>
               ))}
             </TabsList>
-          </motion.div>
+          </div>
           {categories.map((category) => (
             <TabsContent key={category} value={category} className="mt-0">
-              {" "}
-              <motion.div
-                variants={containerVariants}
-                initial="hidden"
-                animate="visible"
-                key={selectedCategory}
-                className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-3 sm:gap-6">
+              <div className="max-w-7xl mx-auto grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-3 sm:gap-6">
                 {filteredSkills.map((skill, index) => (
-                  <motion.div
+                  <div
                     key={skill.name}
-                    variants={itemVariants}
-                    whileHover={{
-                      scale: 1.02,
-                      y: -2,
-                      transition: {
-                        type: "spring",
-                        stiffness: 300,
-                        damping: 20,
-                      },
-                    }}
-                    whileTap={{ scale: 0.98 }}>
-                    <Card className="p-0! shadow-lg border-0 hover:shadow-xl transition-shadow duration-300 bg-card/80 backdrop-blur-sm overflow-hidden group h-full flex items-stretch">
+                    className="animate-scale-in"
+                    style={{ animationDelay: `${index * 50}ms` }}>
+                    <Card className="p-0 shadow-lg border-0 hover:shadow-xl transition-all duration-300 bg-card/80 backdrop-blur-sm overflow-hidden group h-full flex items-stretch hover:scale-105 origin-bottom">
                       <MagicCard
-                        className="h-full w-full flex flex-col"
-                        gradientColor={`${skill.color}50`}
-                        gradientTo={skill.color}
+                        gradientColor={skill.color}
                         gradientFrom={skill.color}
-                        gradientOpacity={0.1}>
-                        <div className="p-3 sm:p-4 md:p-6 h-full flex flex-col justify-between relative min-h-[160px] sm:min-h-[180px]">
-                          <div
-                            className="absolute inset-0 opacity-0 group-hover:opacity-[5%] transition-opacity duration-300"
-                            style={{ backgroundColor: `${skill.color}` }}
-                          />
-
+                        gradientTo={skill.color}
+                        gradientOpacity={0.1}
+                        className="h-full w-full relative">
+                        <div
+                          className="absolute inset-0 opacity-0 group-hover:opacity-[5%] transition-opacity duration-300"
+                          style={{ backgroundColor: skill.color }}
+                        />
+                        <div className="h-full w-full flex flex-col p-3 sm:p-4 md:p-6 justify-between min-h-[160px] sm:min-h-[180px]">
                           <div className="flex flex-col items-center text-center mb-3 sm:mb-4 md:mb-6 relative z-10 w-full flex-1">
                             {skill.icon ? (
-                              <motion.div
+                              <div
                                 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl mb-2 sm:mb-3 md:mb-4 transition-all duration-300 group-hover:scale-105 h-10 w-10 sm:h-12 sm:w-12 md:h-16 md:w-16 lg:h-20 lg:w-20 rounded-lg sm:rounded-xl md:rounded-3xl flex items-center justify-center shadow-lg"
-                                style={{ color: skill.color }}
-                                whileHover={{ rotate: [0, -2, 2, 0] }}
-                                transition={{ duration: 0.3 }}>
+                                style={{ color: skill.color }}>
                                 {skill.icon}
-                              </motion.div>
+                              </div>
                             ) : (
                               <div
                                 className="w-10 h-10 sm:w-12 sm:h-12 md:w-16 md:h-16 mb-2 sm:mb-3 md:mb-4 rounded-lg sm:rounded-xl flex items-center justify-center text-white font-bold text-sm sm:text-base md:text-lg lg:text-xl shadow-lg transition-transform duration-300 group-hover:scale-105"
@@ -354,39 +278,26 @@ function RouteComponent() {
                               </span>
                             </div>
                             <div className="w-full bg-muted/50 rounded-full h-2 sm:h-2.5 md:h-3 overflow-hidden shadow-inner">
-                              <motion.div
-                                className="h-2 sm:h-2.5 md:h-3 rounded-full shadow-sm relative overflow-hidden"
-                                style={{ backgroundColor: skill.color }}
-                                initial={{ width: 0 }}
-                                animate={{ width: `${skill.proficiency}%` }}
-                                transition={{
-                                  duration: 1.5,
-                                  delay: index * 0.05,
-                                  ease: [0.25, 0.46, 0.45, 0.94],
-                                }}>
-                                <motion.div
-                                  className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent"
-                                  initial={{ x: "-100%" }}
-                                  animate={{ x: "100%" }}
-                                  transition={{
-                                    duration: 2,
-                                    delay: index * 0.05 + 1.5,
-                                    ease: "easeInOut",
-                                  }}
-                                />
-                              </motion.div>
+                              <div
+                                className="h-2 sm:h-2.5 md:h-3 rounded-full shadow-sm relative overflow-hidden animate-progress-bar"
+                                style={{
+                                  backgroundColor: skill.color,
+                                  width: `${skill.proficiency}%`,
+                                  animationDelay: `${index * 50 + 200}ms`,
+                                }}
+                              />
                             </div>
                           </div>
                         </div>
                       </MagicCard>
                     </Card>
-                  </motion.div>
+                  </div>
                 ))}
-              </motion.div>
+              </div>
             </TabsContent>
           ))}
         </Tabs>
-      </div>
+      </section>
     </main>
   );
 }

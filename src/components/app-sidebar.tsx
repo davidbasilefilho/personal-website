@@ -60,9 +60,7 @@ export function AppSidebar() {
                   <SidebarMenuButton
                     variant={pathname === item.to ? "active" : "default"}
                     className="p-0">
-                    <Link
-                      className="no-underline decoration-0 p-2"
-                      {...item}>
+                    <Link className="no-underline decoration-0 p-2" {...item}>
                       {item.label}
                     </Link>
                   </SidebarMenuButton>
