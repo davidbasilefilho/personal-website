@@ -247,9 +247,9 @@ function RouteComponent() {
                               </div>
                             ) : (
                               <div
-                                className="w-10 h-10 sm:w-12 sm:h-12 md:w-16 md:h-16 mb-2 sm:mb-3 md:mb-4 rounded-lg sm:rounded-xl flex items-center justify-center text-white font-bold text-sm sm:text-base md:text-lg lg:text-xl shadow-lg transition-transform duration-300 group-hover:scale-105"
+                                className="w-10 h-10 sm:w-12 sm:h-12 md:w-16 md:h-16 lg:w-20 lg:h-20 mb-2 sm:mb-3 md:mb-4 rounded-lg sm:rounded-xl md:rounded-2xl lg:rounded-3xl flex items-center justify-center text-white font-bold text-sm sm:text-base md:text-lg lg:text-xl shadow-lg transition-transform duration-300 group-hover:scale-105"
                                 style={{ backgroundColor: skill.color }}>
-                                {skill.name.charAt(0)}
+                                {skill.name.charAt(0).toUpperCase()}
                               </div>
                             )}
                             <h3 className="font-semibold text-sm sm:text-base md:text-lg mb-1 sm:mb-2 transition-colors duration-200 leading-tight">
