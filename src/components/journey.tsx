@@ -105,7 +105,7 @@ const highlightGradientOptions: GradientOptions = {
 export function Journey() {
   return (
     <div className="space-y-6">
-      <div className="space-y-2 animate-in fade-in slide-in-from-top-10 duration-700 ease-out">
+      <div className="space-y-2 animate-fade-in slide-in-from-top-10 duration-700 ease-out">
         <h1 className="text-2xl font-semibold">My Journey</h1>
         <p className="text-muted-foreground text-lg max-w-2xl leading-snug">
           From my first lines of code to building complex applications, here's
@@ -123,15 +123,13 @@ export function Journey() {
       </div>
 
       <div className="relative mt-8">
-        <div
-          className="absolute left-8 top-0 bottom-0 w-0.5 bg-gradient-to-b from-primary/20 via-primary/50 to-primary/20 hidden md:block animate-in fade-in zoom-in-y-100 duration-1200 ease-out delay-400"
-        />
+        <div className="absolute left-8 top-0 bottom-0 w-0.5 bg-gradient-to-b from-primary/20 via-primary/50 to-primary/20 hidden md:block animate-fade-in zoom-in-y-100 duration-1200" />
 
         <div className="space-y-8">
           {steps.map((step, index) => (
             <div
               key={index}
-              className="relative group animate-in fade-in slide-in-from-left-10 duration-700 ease-out"
+              className="relative group animate-in fade-in ease-out"
               style={{ animationDelay: `${0.4 + index * 0.1}s` }}>
               <div
                 className="absolute left-6 w-4 h-4 bg-primary rounded-full border-4 border-background shadow-lg hidden md:block group-hover:scale-125 transition-transform duration-300 animate-in fade-in zoom-in-100"
@@ -140,8 +138,7 @@ export function Journey() {
 
               <div className="md:ml-16 transition-all duration-300 group-hover:translate-x-2">
                 <Card
-                  className={`
-                    transition-all duration-300 group-hover:shadow-lg group-hover:shadow-primary/10 gap-2 p-0 shadow-none border-none`}>
+                  className={`animate-fade-in group-hover:shadow-lg group-hover:shadow-primary/10 gap-2 p-0 shadow-none border-none`}>
                   <MagicCard
                     className={cn("py-6")}
                     borderWidth={step.highlight ? 1 : 1}
