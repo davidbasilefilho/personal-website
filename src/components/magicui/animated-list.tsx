@@ -29,13 +29,10 @@ export interface AnimatedListProps extends ComponentPropsWithoutRef<"div"> {
   delay?: number;
 }
 
-export const AnimatedList = React.memo(
-  ({ children, className, delay = 1000, ...props }: AnimatedListProps) => {
+export const AnimatedList = (
+  { children, className, delay = 1000, ...props }: AnimatedListProps) => {
     const [index, setIndex] = useState(0);
-    const childrenArray = useMemo(
-      () => React.Children.toArray(children),
-      [children],
-    );
+    const childrenArray = React.Children.toArray(children);
 
     useEffect(() => {
       if (index < childrenArray.length - 1) {
@@ -47,10 +44,7 @@ export const AnimatedList = React.memo(
       }
     }, [index, delay, childrenArray.length]);
 
-    const itemsToShow = useMemo(() => {
-      const result = childrenArray.slice(0, index + 1).reverse();
-      return result;
-    }, [index, childrenArray]);
+    const itemsToShow = childrenArray.slice(0, index + 1).reverse();
 
     return (
       <div
@@ -65,7 +59,6 @@ export const AnimatedList = React.memo(
         </AnimatePresence>
       </div>
     );
-  },
-);
+  };
 
 AnimatedList.displayName = "AnimatedList";

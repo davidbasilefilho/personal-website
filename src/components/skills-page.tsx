@@ -1,9 +1,15 @@
-import { ReactNode, useMemo, useState } from "react";
+import { ReactNode, useState } from "react";
 import { MagicCard } from "@/components/magicui/magic-card";
 import { useTheme } from "@/components/theme-provider";
 import { Card } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import {
+  Tabs,
+  TabsContent,
+  TabsList,
+  TabsTrigger,
+} from "@/components/ui/tabs-baseui";
+import { useIsMobile } from "@/hooks/use-mobile";
 import { cn } from "@/lib/utils";
 
 const skillsData = [
@@ -152,15 +158,13 @@ export default function SkillsPageComponent() {
   const [selectedCategory, setSelectedCategory] = useState<string>("All");
   const { resolvedTheme } = useTheme();
 
-  const skills = useMemo(() => {
-    return skillsData.map((skill) => ({
-      ...skill,
-      color:
-        resolvedTheme === "dark" && skill.darkColor
-          ? skill.darkColor
-          : skill.color,
-    }));
-  }, [resolvedTheme]);
+  const skills = skillsData.map((skill) => ({
+    ...skill,
+    color:
+      resolvedTheme === "dark" && skill.darkColor
+        ? skill.darkColor
+        : skill.color,
+  }));
 
   return (
     <main className="flex flex-col justify-stretch text-balance items-start h-fit min-h-full relative overflow-hidden">
@@ -189,7 +193,6 @@ export default function SkillsPageComponent() {
         <Tabs
           value={selectedCategory}
           onValueChange={setSelectedCategory}
-          defaultValue={categories[0]}
           className="w-full">
           <div className="flex justify-center mb-4 animate-fade-in [animation-delay:0.2s]">
             <TabsList className="flex h-fit w-full md:w-3/5 lg:1/2 xl:w-fit bg-card/50 backdrop-blur-sm border border-border/50 rounded-xl p-1 flex-wrap gap-1">
@@ -198,10 +201,9 @@ export default function SkillsPageComponent() {
                   key={category}
                   value={category}
                   className={cn(
-                    selectedCategory === category
-                      ? "text-primary-foreground"
-                      : "hover:bg-sidebar-accent! dark:hover:bg-accent!",
-                    "relative cursor-pointer px-3 sm:px-4 py-2 sm:py-2.5 rounded-lg transition-colors duration-200 data-[state=active]:bg-primary! data-[state=active]:text-primary-foreground! min-w-0 border-0",
+                    selectedCategory !== category &&
+                      "hover:bg-sidebar-accent! dark:hover:bg-accent!",
+                    "relative cursor-pointer px-3 sm:px-4 py-2 sm:py-2.5 rounded-lg transition-colors duration-200 data-[state=active]:bg-primary! data-[state=active]:text-primary-foreground! min-w-0",
                   )}>
                   <span className="truncate w-16">{category}</span>
                 </TabsTrigger>
