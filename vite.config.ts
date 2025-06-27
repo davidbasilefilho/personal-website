@@ -1,5 +1,6 @@
 import { tanstackStart } from "@tanstack/react-start/plugin/vite";
 import { defineConfig } from "vite";
+import viteCompression from "vite-plugin-compression";
 import tsConfigPaths from "vite-tsconfig-paths";
 
 export default defineConfig({
@@ -10,6 +11,9 @@ export default defineConfig({
     tsConfigPaths({
       projects: ["./tsconfig.json"],
     }),
-    tanstackStart({ target: "netlify" }),
+    tanstackStart({
+      target: "netlify",
+    }),
+    viteCompression(),
   ],
 });

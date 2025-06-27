@@ -1,6 +1,6 @@
 import { Link } from "@tanstack/react-router";
 import { Calendar, Code, GamepadIcon, Sparkles } from "lucide-react";
-import { motion } from "motion/react";
+
 import { ReactNode } from "react";
 import { cn } from "@/lib/utils";
 import { MagicCard } from "./magicui/magic-card";
@@ -105,11 +105,7 @@ const highlightGradientOptions: GradientOptions = {
 export function Journey() {
   return (
     <div className="space-y-6">
-      <motion.div
-        className="space-y-2"
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6, ease: "easeOut" }}>
+      <div className="space-y-2 animate-in fade-in slide-in-from-top-10 duration-700 ease-out">
         <h1 className="text-2xl font-semibold">My Journey</h1>
         <p className="text-muted-foreground text-lg max-w-2xl leading-snug">
           From my first lines of code to building complex applications, here's
@@ -124,38 +120,22 @@ export function Journey() {
           </Link>{" "}
           page.
         </p>
-      </motion.div>
+      </div>
 
       <div className="relative mt-8">
-        <motion.div
-          className="absolute left-8 top-0 bottom-0 w-0.5 bg-gradient-to-b from-primary/20 via-primary/50 to-primary/20 hidden md:block"
-          initial={{ scaleY: 0 }}
-          animate={{ scaleY: 1 }}
-          transition={{ duration: 0.8, delay: 0.2, ease: "easeOut" }}
-          style={{ transformOrigin: "top" }}
+        <div
+          className="absolute left-8 top-0 bottom-0 w-0.5 bg-gradient-to-b from-primary/20 via-primary/50 to-primary/20 hidden md:block animate-in fade-in zoom-in-y-100 duration-1200 ease-out delay-400"
         />
 
         <div className="space-y-8">
           {steps.map((step, index) => (
-            <motion.div
+            <div
               key={index}
-              className="relative group"
-              initial={{ opacity: 0, x: -30 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{
-                duration: 0.6,
-                delay: 0.4 + index * 0.1,
-                ease: "easeOut",
-              }}>
-              <motion.div
-                className="absolute left-6 w-4 h-4 bg-primary rounded-full border-4 border-background shadow-lg hidden md:block group-hover:scale-125 transition-transform duration-200"
-                initial={{ scale: 0 }}
-                animate={{ scale: 1 }}
-                transition={{
-                  duration: 0.4,
-                  delay: 0.6 + index * 0.1,
-                  ease: "easeOut",
-                }}
+              className="relative group animate-in fade-in slide-in-from-left-10 duration-700 ease-out"
+              style={{ animationDelay: `${0.4 + index * 0.1}s` }}>
+              <div
+                className="absolute left-6 w-4 h-4 bg-primary rounded-full border-4 border-background shadow-lg hidden md:block group-hover:scale-125 transition-transform duration-300 animate-in fade-in zoom-in-100"
+                style={{ animationDelay: `${0.7 + index * 0.1}s` }}
               />
 
               <div className="md:ml-16 transition-all duration-300 group-hover:translate-x-2">
@@ -215,22 +195,18 @@ export function Journey() {
                   </MagicCard>
                 </Card>
               </div>
-            </motion.div>
+            </div>
           ))}
         </div>
 
-        <div className="absolute bottom-0 left-8 w-0.5 h-8 bg-gradient-to-t from-transparent to-transparent hidden md:block" />
+        <div
+          className="text-right pr-8 pt-4 animate-in fade-in duration-700 ease-out"
+          style={{ animationDelay: `${1.0 + steps.length * 0.1}s` }}>
+          <p className="text-sm text-muted-foreground">
+            The journey continues... 🚀
+          </p>
+        </div>
       </div>
-
-      <motion.div
-        className="text-right pr-8 pt-4"
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ duration: 0.6, delay: 0.8 + steps.length * 0.1 }}>
-        <p className="text-sm text-muted-foreground">
-          The journey continues... 🚀
-        </p>
-      </motion.div>
     </div>
   );
 }
