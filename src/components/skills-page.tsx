@@ -284,9 +284,7 @@ export default function SkillsPageComponent() {
                                   style={{
                                     backgroundColor: skill.color,
                                     width: `${skill.proficiency}%`,
-                                    animationDelay: `${
-                                      index * 50 + 200
-                                    }ms`,
+                                    animationDelay: `${index * 50 + 200}ms`,
                                   }}
                                 />
                               </div>
@@ -351,9 +349,7 @@ export default function SkillsPageComponent() {
                                     style={{
                                       backgroundColor: skill.color,
                                       width: `${skill.proficiency}%`,
-                                      animationDelay: `${
-                                        index * 50 + 200
-                                      }ms`,
+                                      animationDelay: `${index * 50 + 200}ms`,
                                     }}
                                   />
                                 </div>
