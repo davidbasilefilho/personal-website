@@ -3,6 +3,7 @@ import { MagicCard } from "@/components/magicui/magic-card";
 import { useTheme } from "@/components/theme-provider";
 import { Card } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
+import { useIsMobile } from "@/hooks/use-mobile";
 import {
   Tabs,
   TabsContent,
@@ -157,6 +158,7 @@ const categories = [
 export default function SkillsPageComponent() {
   const [selectedCategory, setSelectedCategory] = useState<string>("All");
   const { resolvedTheme } = useTheme();
+  const isMobile = useIsMobile();
 
   const skills = skillsData.map((skill) => ({
     ...skill,
@@ -227,18 +229,17 @@ export default function SkillsPageComponent() {
                       key={skill.name}
                       className="animate-scale-in"
                       style={{ animationDelay: `${index * 50}ms` }}>
-                      <Card className="p-0 shadow-lg border-0 hover:shadow-xl transition-all duration-300 bg-card/80 backdrop-blur-sm overflow-hidden group h-full flex items-stretch hover:scale-105 origin-bottom">
-                        <MagicCard
-                          gradientColor={skill.color}
-                          gradientFrom={skill.color}
-                          gradientTo={skill.color}
-                          gradientOpacity={0.1}
-                          className="h-full w-full relative">
+                      {isMobile ? (
+                        <Card className="p-0 shadow-lg border-0 hover:shadow-xl transition-all duration-300 bg-card/80 backdrop-blur-sm overflow-hidden group h-full flex items-stretch hover:scale-105 origin-bottom">
                           <div
-                            className="absolute inset-0 opacity-0 group-hover:opacity-[5%] transition-opacity duration-300"
-                            style={{ backgroundColor: skill.color }}
-                          />
-                          <div className="h-full w-full flex flex-col p-3 sm:p-4 md:p-6 justify-between min-h-[160px] sm:min-h-[180px]">
+                            className="h-full w-full relative p-3 sm:p-4 md:p-6 flex flex-col justify-between min-h-[160px] sm:min-h-[180px]"
+                            style={{
+                              background: `radial-gradient(ellipse at center, ${skill.color}20, transparent 60%)`,
+                            }}>
+                            <div
+                              className="absolute inset-0 opacity-0 group-hover:opacity-[5%] transition-opacity duration-300"
+                              style={{ backgroundColor: skill.color }}
+                            />
                             <div className="flex flex-col items-center text-center mb-3 sm:mb-4 md:mb-6 relative z-10 w-full flex-1">
                               {skill.icon ? (
                                 <div
@@ -284,14 +285,84 @@ export default function SkillsPageComponent() {
                                   style={{
                                     backgroundColor: skill.color,
                                     width: `${skill.proficiency}%`,
-                                    animationDelay: `${index * 50 + 200}ms`,
+                                    animationDelay: `${
+                                      index * 50 + 200
+                                    }ms`,
                                   }}
                                 />
                               </div>
                             </div>
                           </div>
-                        </MagicCard>
-                      </Card>
+                        </Card>
+                      ) : (
+                        <Card className="p-0 shadow-lg border-0 hover:shadow-xl transition-all duration-300 bg-card/80 backdrop-blur-sm overflow-hidden group h-full flex items-stretch hover:scale-105 origin-bottom">
+                          <MagicCard
+                            gradientColor={skill.color}
+                            gradientFrom={skill.color}
+                            gradientTo={skill.color}
+                            gradientOpacity={0.1}
+                            className="h-full w-full relative">
+                            <div
+                              className="absolute inset-0 opacity-0 group-hover:opacity-[5%] transition-opacity duration-300"
+                              style={{ backgroundColor: skill.color }}
+                            />
+                            <div className="h-full w-full flex flex-col p-3 sm:p-4 md:p-6 justify-between min-h-[160px] sm:min-h-[180px]">
+                              <div className="flex flex-col items-center text-center mb-3 sm:mb-4 md:mb-6 relative z-10 w-full flex-1">
+                                {skill.icon ? (
+                                  <div
+                                    className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl mb-2 sm:mb-3 md:mb-4 transition-all duration-300 group-hover:scale-105 h-10 w-10 sm:h-12 sm:w-12 md:h-16 md:w-16 lg:h-20 lg:w-20 rounded-lg sm:rounded-xl md:rounded-3xl flex items-center justify-center shadow-lg"
+                                    style={{ color: skill.color }}>
+                                    {skill.icon}
+                                  </div>
+                                ) : (
+                                  <div
+                                    className="w-10 h-10 sm:w-12 sm:h-12 md:w-16 md:h-16 lg:w-20 lg:h-20 mb-2 sm:mb-3 md:mb-4 rounded-lg sm:rounded-xl md:rounded-2xl lg:rounded-3xl flex items-center justify-center text-white font-bold text-sm sm:text-base md:text-lg lg:text-xl shadow-lg transition-transform duration-300 group-hover:scale-105"
+                                    style={{ backgroundColor: skill.color }}>
+                                    {skill.name.charAt(0).toUpperCase()}
+                                  </div>
+                                )}
+                                <h3 className="font-semibold text-sm sm:text-base md:text-lg mb-1 sm:mb-2 transition-colors duration-200 leading-tight">
+                                  {skill.name}
+                                </h3>
+                                <div className="flex gap-1 sm:gap-1.5 md:gap-2 flex-wrap justify-center">
+                                  <span
+                                    className="text-xs px-1.5 sm:px-2 md:px-3 py-0.5 sm:py-1 md:py-1.5 rounded-full font-medium border transition-all duration-200 group-hover:scale-102"
+                                    style={{
+                                      backgroundColor: `${skill.color}15`,
+                                      color: skill.color,
+                                      borderColor: `${skill.color}30`,
+                                    }}>
+                                    {skill.category}
+                                  </span>
+                                </div>
+                              </div>
+
+                              <div className="space-y-1.5 sm:space-y-2 md:space-y-3 relative z-10">
+                                <div className="flex justify-between items-center">
+                                  <span className="text-xs sm:text-sm text-muted-foreground font-medium">
+                                    Proficiency
+                                  </span>
+                                  <span className="text-xs sm:text-sm font-bold text-foreground">
+                                    {skill.proficiency}%
+                                  </span>
+                                </div>
+                                <div className="w-full bg-muted/50 rounded-full h-2 sm:h-2.5 md:h-3 overflow-hidden shadow-inner">
+                                  <div
+                                    className="h-2 sm:h-2.5 md:h-3 rounded-full shadow-sm relative overflow-hidden animate-progress-bar"
+                                    style={{
+                                      backgroundColor: skill.color,
+                                      width: `${skill.proficiency}%`,
+                                      animationDelay: `${
+                                        index * 50 + 200
+                                      }ms`,
+                                    }}
+                                  />
+                                </div>
+                              </div>
+                            </div>
+                          </MagicCard>
+                        </Card>
+                      )}
                     </div>
                   ))}
               </div>
