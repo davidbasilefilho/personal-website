@@ -10,7 +10,6 @@ import {
   TabsList,
   TabsTrigger,
 } from "@/components/ui/tabs-baseui";
-import { useIsMobile } from "@/hooks/use-mobile";
 import { cn } from "@/lib/utils";
 
 const skillsData = [
