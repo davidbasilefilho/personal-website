@@ -19,18 +19,11 @@ export default function HomePageComponent() {
 
   const dateOfBirth = new Date(2007, 1, 16); // 16/02/2007
   const age = calculateAge(dateOfBirth);
-  const [test, setTest] = useState(0);
-  const { resolvedTheme, theme, setTheme } = useTheme();
-  setTheme("dark"); // Force dark theme for testing purposes
+  const { setTheme } = useTheme();
   useEffect(() => setTheme("dark"), [setTheme]);
 
   return (
     <main className="flex flex-col justify-stretch text-balance items-start h-fit min-h-full">
-      <Button type="button" onClick={() => setTest((prev) => prev++)}>
-        Test {test}
-      </Button>
-      <p>Current theme: {theme}</p>
-      <p>Resolved theme: {resolvedTheme}</p>
       <section className="m-6 mt-10">
         <h1 className="**:text-5xl **:md:text-6xl **:font-semibold mb-2">
           <SparklesText className="inline-block">Building</SparklesText>{" "}
