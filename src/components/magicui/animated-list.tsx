@@ -29,36 +29,40 @@ export interface AnimatedListProps extends ComponentPropsWithoutRef<"div"> {
   delay?: number;
 }
 
-export const AnimatedList = (
-  { children, className, delay = 1000, ...props }: AnimatedListProps) => {
-    const [index, setIndex] = useState(0);
-    const childrenArray = React.Children.toArray(children);
+export const AnimatedList = ({
+  children,
+  className,
+  delay = 1000,
+  ...props
+}: AnimatedListProps) => {
+  const [index, setIndex] = useState(0);
+  const childrenArray = React.Children.toArray(children);
 
-    useEffect(() => {
-      if (index < childrenArray.length - 1) {
-        const timeout = setTimeout(() => {
-          setIndex((prevIndex) => (prevIndex + 1) % childrenArray.length);
-        }, delay);
+  useEffect(() => {
+    if (index < childrenArray.length - 1) {
+      const timeout = setTimeout(() => {
+        setIndex((prevIndex) => (prevIndex + 1) % childrenArray.length);
+      }, delay);
 
-        return () => clearTimeout(timeout);
-      }
-    }, [index, delay, childrenArray.length]);
+      return () => clearTimeout(timeout);
+    }
+  }, [index, delay, childrenArray.length]);
 
-    const itemsToShow = childrenArray.slice(0, index + 1).reverse();
+  const itemsToShow = childrenArray.slice(0, index + 1).reverse();
 
-    return (
-      <div
-        className={cn(`flex flex-col items-center gap-4`, className)}
-        {...props}>
-        <AnimatePresence>
-          {itemsToShow.map((item) => (
-            <AnimatedListItem key={(item as React.ReactElement).key}>
-              {item}
-            </AnimatedListItem>
-          ))}
-        </AnimatePresence>
-      </div>
-    );
-  };
+  return (
+    <div
+      className={cn(`flex flex-col items-center gap-4`, className)}
+      {...props}>
+      <AnimatePresence>
+        {itemsToShow.map((item) => (
+          <AnimatedListItem key={(item as React.ReactElement).key}>
+            {item}
+          </AnimatedListItem>
+        ))}
+      </AnimatePresence>
+    </div>
+  );
+};
 
 AnimatedList.displayName = "AnimatedList";
