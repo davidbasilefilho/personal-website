@@ -37,6 +37,9 @@ export const getById = query({
 export const getByPost = query({
   args: { postId: v.id("posts") },
   handler: async ({ db }, { postId }) => {
-    return await db.query("comments").withIndex("by_post", (q) => q.eq("postId", postId)).collect();
+    return await db
+      .query("comments")
+      .withIndex("by_post", (q) => q.eq("postId", postId))
+      .collect();
   },
 });
