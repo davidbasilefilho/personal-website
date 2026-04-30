@@ -14,7 +14,7 @@
   "dependencies": {
     "@auth/core": "0.37.0",
     "@base-ui-components/react": "^1.0.0-beta.0",
-    "@clerk/tanstack-react-start": "^0.18.1",
+    "@clerk/tanstack-react-start": "^1.1.8",
     "@clerk/themes": "^2.2.52",
     "@convex-dev/auth": "^0.0.87",
     "@convex-dev/react-query": "^0.0.0-alpha.11",
